@@ -1,4 +1,5 @@
 Made by Daniel Carvajal From C. Leon King High School
+Can also download files from Github at https://github.com/judacas/FBLA-Coding-Submission-Daniel-Carvajal
 To run this program you will need to assure that you have a Java JDK installed (recommended version: java 10.0.2)
 You will also need to be sure that you have python3 installed (recommended version: 3.8.2) 
 NOTE: it must be python3 not python
