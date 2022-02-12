@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter
+# from os import getcwd
 from selenium.webdriver import Chrome
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -6,15 +8,17 @@ from selenium.webdriver.common.by import By
 import time
 import sys
 
-
+# print(getcwd())
 # Function for closing the window or exiting the app
-def closeApp():
+# the paramter is just there because through button doesn't 
+# utlize any paramters but with the esc key it does
+def closeApp(nothing = None):
     windowApp.destroy()
 
 #Function for searching trip advisor for results 
 def search():
     query = attraction.get() + " in " + city.get()+", "+state.get()
-    queryLabel.config(text= "Looking for " + query)
+    # queryLabel.config(text= "Looking for " + query)
     opt = Options()
     opt.add_argument("--disable-notifications")
     # opt.add_argument("headless")
@@ -25,18 +29,21 @@ def search():
     })
     browser = None
     try:
-        browser = webdriver.Chrome(executable_path= '.\dist\TripAdvisorSearcher\selenium\webdriver\chromedriver99.exe', options=opt)
+        # browser = webdriver.Chrome(executable_path= '.\dist\GUI\selenium\webdriver\Chrome\chromedriver99.exe', options=opt)
+        browser = webdriver.Chrome(executable_path= '.\selenium\webdriver\Chrome\chromedriver99.exe', options=opt)
     except:
         try:
-            browser = webdriver.Chrome(executable_path= '.\dist\TripAdvisorSearcher\selenium\webdriver\chromedriver98.exe', options=opt)
+            # browser = webdriver.Chrome(executable_path= '.\dist\GUI\selenium\webdriver\Chrome\chromedriver98.exe', options=opt)
+            browser = webdriver.Chrome(executable_path= '.\selenium\webdriver\Chrome\chromedriver98.exe', options=opt)
         except:
             try:
-                browser = webdriver.Chrome(executable_path= '.\dist\TripAdvisorSearcher\selenium\webdriver\chromedriver97.exe', options=opt)
+                # browser = webdriver.Chrome(executable_path= '.\dist\GUI\selenium\webdriver\Chrome\chromedriver97.exe', options=opt)
+                browser = webdriver.Chrome(executable_path= '.\selenium\webdriver\Chrome\chromedriver97.exe', options=opt)
             except:
                 try:
-                    browser = webdriver.Chrome(executable_path= '.\dist\TripAdvisorSearcher\selenium\webdriver\chromedriver87.exe', options=opt)
+                    # browser = webdriver.Chrome(executable_path= '.\dist\GUI\selenium\webdriver\Chrome\chromedriver87.exe', options=opt)
+                    browser = webdriver.Chrome(executable_path= '.\selenium\webdriver\Chrome\chromedriver87.exe', options=opt)
                 except:
-                    browser.close()
                     results = "there was an error in starting chrom to search Trip advisor\nPlease try installing chrome version 99 and try again"
                     resultLabel.config(text= results)
                     return
@@ -118,15 +125,12 @@ stateTextBox.grid(row=27,column=0, pady = 25)
 searchButton = Button(windowApp, command=search, text="Search")
 searchButton.grid(row=28,column=0)
 
-queryLabel=Label(windowApp, fg='green')
-queryLabel.grid(row=30,column=0,sticky=W,pady=0)
-
 resultLabel=Label(windowApp, fg='green')
-resultLabel.grid(row=30,column=1,sticky=W,pady=0)
+resultLabel.grid(row=35,column=0, sticky=W,pady=0)
 
 # Button for exiting the application
 exitButton = Button(windowApp, text="Exit App",command=closeApp)
 exitButton.grid(row=38,column=0,pady=20)
 
-
+windowApp.bind("<Escape>", closeApp)
 windowApp.mainloop()
