@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter
+from turtle import left
 # from os import getcwd
 from selenium.webdriver import Chrome
 from selenium import webdriver
@@ -18,10 +19,10 @@ def closeApp(nothing = None):
 #Function for searching trip advisor for results 
 def search():
     query = attraction.get() + " in " + city.get()+", "+state.get()
-    # queryLabel.config(text= "Looking for " + query)
+    results = "According to trip advisor, here are some " + query + ":\n"
     opt = Options()
     opt.add_argument("--disable-notifications")
-    # opt.add_argument("headless")
+    opt.add_argument("headless")
     opt.add_argument("start-maximized")
     opt.add_argument("--disable-extensions")
     opt.add_experimental_option("prefs", { \
@@ -44,13 +45,12 @@ def search():
                     # browser = webdriver.Chrome(executable_path= '.\dist\GUI\selenium\webdriver\Chrome\chromedriver87.exe', options=opt)
                     browser = webdriver.Chrome(executable_path= '.\selenium\webdriver\Chrome\chromedriver87.exe', options=opt)
                 except:
-                    results = "there was an error in starting chrom to search Trip advisor\nPlease try installing chrome version 99 and try again"
+                    results = "there was an error in starting chrome to search Trip advisor\nPlease try installing chrome version 99 and try again"
                     resultLabel.config(text= results)
                     return
     url = "https://www.tripadvisor.com/Search?q=" + query + "&blockRedirect=true"
     browser.get(url)
     time.sleep(2)
-    results = ""
     try:
         browser.find_element(By.CLASS_NAME, "original-query").click()
         time.sleep(1)
@@ -90,15 +90,12 @@ def search():
 
 windowApp = Tk()
 windowApp.title("Attractions Finder")
-windowApp.geometry('500x500')
+windowApp.geometry('400x1000')
 
-instructions1 = "Please enter the type of attraction you want to"
-instructions2 = "search for (i.e. hotel, restaurant, public park"
+instructions1 = "Please enter the type of attraction you want to\nsearch for (i.e. hotel, restaurant, public park)\nYou can search for multiple attributes at once here\nfor example cheap fastfood restaurants by the beach"
 
 instructions1Label = Label(windowApp, text=instructions1, fg='blue')
-instructions1Label.grid(row=15,column=0,padx=5,pady=1)
-instructions2Label = Label(windowApp, text=instructions2, fg='blue')
-instructions2Label.grid(row=16,column=0,padx=5,pady=1)
+instructions1Label.grid(row=15,column=0,padx=5,pady=1)  
 
 attraction=StringVar()
 attractionSearch = "Attractions"
@@ -125,8 +122,9 @@ stateTextBox.grid(row=27,column=0, pady = 25)
 searchButton = Button(windowApp, command=search, text="Search")
 searchButton.grid(row=28,column=0)
 
-resultLabel=Label(windowApp, fg='green')
-resultLabel.grid(row=35,column=0, sticky=W,pady=0)
+
+resultLabel=Label(windowApp, fg='Black', justify=LEFT)
+resultLabel.grid(row=37,column=0, sticky=W,pady=0)
 
 # Button for exiting the application
 exitButton = Button(windowApp, text="Exit App",command=closeApp)
