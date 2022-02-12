@@ -71,6 +71,7 @@ def search():
                     results += span.text + "\n"
             except BaseException:
                 pass
+        resultLabel.config(text= results)
         browser.close()   
     except BaseException:
         browser.close()
